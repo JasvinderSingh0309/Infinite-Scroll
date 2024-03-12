@@ -48,7 +48,6 @@ function displayCountryDetails(dataObject) {
 
     let cap = document.createElement("p");
     cap.innerHTML = `Capital &#58; ${dataObject.countryCap}.`;
-    // textContent not used as &#58; this is output as it is, with innerHTML its entity value is output.
 
     let pop = document.createElement("p");
     pop.innerHTML = `Pop &#58; ${Math.floor(dataObject.countryPop/100000)/10} M.`;    
@@ -65,19 +64,7 @@ function getTenCountryData(){
 }
 getTenCountryData();
 
-//------------------------------------------------------------------
-
-// window.addEventListener("scroll", () => {
-//   console.log(window.scrollY);
-// });
-
 window.addEventListener("scroll", () => {
-  // console.log(document.documentElement.scrollHeight); // Height of the content
-
-  // console.log(window.innerHeight); // Height of the viewport Screen
-
-  // console.log(Math.floor(document.documentElement.scrollHeight - (window.innerHeight+window.scrollY))); // calculates height left fron bottom.
-
   let heightFromBottom = Math.floor(document.documentElement.scrollHeight - (window.innerHeight + window.scrollY));
   if(heightFromBottom < 800) {
     getTenCountryData();
