@@ -9,6 +9,7 @@ function getCountryData() {
             console.log("Cannot Fetch!!");
         }else{
           return data.json();
+
         }
       })
       .then(resp => {
@@ -74,3 +75,6 @@ window.addEventListener("scroll", () => {
     getTenCountryData();
   }
 });
+
+
+
