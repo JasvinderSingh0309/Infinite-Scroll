@@ -5,14 +5,13 @@ function getCountryData() {
     fetch("https://restcountries.com/v3.1/all")
       .then(data => {
         if(!data.ok) {
-          if(data.status === 404);
-            throw new Error("Cannot Fetch!!");
+          if(data.status !== 200);
+            console.log("Cannot Fetch!!");
         }else{
           return data.json();
         }
       })
       .then(resp => {
-        console.log(resp);
         return resp;
       })
       .catch(error => console.log("Error"))
@@ -21,18 +20,24 @@ function getCountryData() {
 
 async function respFromAPI() {
   let countryData = await getCountryData();
-  if(countryData) {
-    let rdValue = (() => {
-      return Math.floor(Math.random()*1000)%200;
-    })();
-    let dataobj = {
-      flag:countryData[rdValue].coatOfArms.png,
-      countryName:countryData[rdValue].name.common,
-      countryCap:countryData[rdValue].capital[0],
-      countryPop:countryData[rdValue].population,
-    }
-    displayCountryDetails(dataobj);
+  
+  let rdValue = (() => {
+    return Math.floor(Math.random()*1000)%250;
+  })();
+  
+  let dataobj = {
+    flag:countryData[rdValue].coatOfArms?.png || "https://png.pngitem.com/pimgs/s/392-3922834_transparent-white-flag-png-white-staples-logo-png.png",
+    countryName:countryData[rdValue].name.common,
+    countryCap:( () => {
+      if(countryData[rdValue].capital) {
+        return countryData[rdValue].capital[0];
+      }else {
+        return countryData[rdValue].name.common;
+      }
+    } )(),
+    countryPop:countryData[rdValue].population,
   }
+  displayCountryDetails(dataobj);
 }
 
 function displayCountryDetails(dataObject) {
@@ -41,7 +46,6 @@ function displayCountryDetails(dataObject) {
 
     let image = document.createElement("img");
     image.src = dataObject.flag;
-    // image.style.width = "100%";
 
     let name = document.createElement("p");
     name.textContent = dataObject.countryName;
@@ -58,7 +62,7 @@ function displayCountryDetails(dataObject) {
 }
 
 function getTenCountryData(){
-  for(let i=1;i<12;i++) {
+  for(let i=1;i<11;i++) {
     respFromAPI();
   }
 }
